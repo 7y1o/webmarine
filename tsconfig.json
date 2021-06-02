@@ -2,7 +2,9 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "sourceMap": true
+    "lib": ["ESNext", "DOM"],
+    "sourceMap": true,
+    "outDir": "build"
   },
   "exclude": [
     "node_modules"
