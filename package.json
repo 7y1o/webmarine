@@ -1,0 +1,23 @@
+{
+  "name": "webmarine-core",
+  "version": "0.0.1-IT",
+  "description": "Core of webmarine engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/magicians-game/webmarine-core.git"
+  },
+  "author": "7y1o",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://bitbucket.org/magicians-game/webmarine-core/issues"
+  },
+  "homepage": "https://bitbucket.org/magicians-game/webmarine-core#readme",
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "three": "^0.129.0"
+  }
+}
