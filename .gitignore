@@ -7,3 +7,4 @@
 !es.build.js
 !es.prod.js
 !README.md
+!tsconfig.json
