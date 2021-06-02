@@ -4,7 +4,7 @@
   "description": "Core of webmarine engine",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack": "node es.build.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,10 @@
   "dependencies": {
     "cannon": "^0.6.2",
     "three": "^0.129.0"
+  },
+  "devDependencies": {
+    "@types/cannon": "^0.1.5",
+    "@types/three": "^0.129.0",
+    "esbuild": "^0.12.5"
   }
 }
