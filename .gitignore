@@ -1,10 +1,8 @@
 /*
 !/src
 !.gitignore
+!favicon.svg
+!index.html
 !package.json
 !package-lock.json
-!test.html
-!es.build.js
-!es.prod.js
-!README.md
 !tsconfig.json
