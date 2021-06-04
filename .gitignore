@@ -1,8 +1,6 @@
 /*
 !/src
 !.gitignore
-!favicon.svg
-!index.html
-!package.json
 !package-lock.json
-!tsconfig.json
+!package.json
+!rollup.config.js
