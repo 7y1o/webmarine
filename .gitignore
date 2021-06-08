@@ -1,6 +1,13 @@
+# Ignoring all, further exclude
 /*
+
+# Directories
 !/src
-!.gitignore
-!package-lock.json
+!/tests
+
+# Files
+!/.gitignore
+!/build.config.js
 !package.json
-!rollup.config.js
+!package-lock.json
+!tsconfig.json
