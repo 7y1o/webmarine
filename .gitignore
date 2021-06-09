@@ -1,13 +1,13 @@
-# Ignoring all, further exclude
+# Ignore all
 /*
 
-# Directories
+# Exclude dirs
 !/src
 !/tests
 
-# Files
+# Exclude files
 !/.gitignore
-!/build.config.js
-!package.json
-!package-lock.json
-!tsconfig.json
+!/package.json
+!/package-lock.json
+!/tsconfig.json
+!/webpack.config.cjs
