@@ -11,3 +11,5 @@
 !/package-lock.json
 !/tsconfig.json
 !/webpack.config.cjs
+!/babel.config.js
+!/cypress.json
