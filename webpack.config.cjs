@@ -12,23 +12,24 @@ const ph = (per, mes, ...args) => {
     console.clear();
 
     console.log();
-    console.log('╭' + '─'.repeat(42) + '╮');
-    console.log('│ ' + (processReady < 10 ? chalk.red(processLine) : processReady < 30 ? chalk.yellow(processLine) : chalk.green(processLine)) + ` │ ${chalk.bgBlack(chalk.whiteBright(`${Math.round(per * 100)}%`))}`);
-    console.log('╰' + '─'.repeat(42) + `╯ ${chalk.bgBlack(chalk.whiteBright(mes))}`);
+    console.log(' ╭' + '─'.repeat(42) + '╮');
+    console.log(' │ ' + (processReady < 10 ? chalk.red(processLine) : processReady < 30 ? chalk.yellow(processLine) : chalk.green(processLine)) + ` │ ${chalk.bgBlack(chalk.whiteBright(`${Math.round(per * 100)}%`))}`);
+    console.log(' ╰' + '─'.repeat(42) + `╯ ${chalk.bgBlack(chalk.whiteBright(mes))}`);
     console.log();
 }
 
 // Config data
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './dist/index.js',
     output: {
-        path: resolve(__dirname, 'dist'),
+        path: resolve(__dirname, 'build'),
         filename: 'webmarine.js',
         library: {
             type: 'module'
         },
-        module: true
+        module: true,
+        iife: true
     },
     experiments: {
         outputModule: true
@@ -58,8 +59,6 @@ module.exports = {
     ],
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({
-            extractComments: false
-        })]
+        minimizer: [new TerserPlugin()]
     }
 };
