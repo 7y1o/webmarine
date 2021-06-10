@@ -13,6 +13,7 @@ export default class CRenderEngine {
     private cCam: Camera;
     private cScene: Scene;
     private readonly tickSteps: ((number) => void)[];
+    private isRunning: boolean;
 
     /** Construct CRenderEngine */
     public constructor(config?: IRenderConfig) {
@@ -51,6 +52,9 @@ export default class CRenderEngine {
             margin: 0;
         `;
         document.body.append(playCanvas);
+
+        // Set default value for isRunning bool
+        this.isRunning = false;
     }
 
     /** Switch current camera */
@@ -91,6 +95,11 @@ export default class CRenderEngine {
         return this.cCam;
     }
 
+    /** Get isRunning boolean */
+    public get running(): boolean {
+        return this.isRunning;
+    }
+
     /** Add step to the tick. Warning: don't push hard algorithms, it may decrease performance! */
     public pushTickStep(fn: (number) => void): void {
         this.tickSteps.push(fn);
@@ -99,13 +108,30 @@ export default class CRenderEngine {
     /** Prepare render before start. Compiles WASM scripts, shaders and a little bit more actions.
      * After all running render loop */
     public prepareRenderAndStart(): void {
-        this.start();
+        if(!this.isRunning) {
+            this.render.compile(this.cScene, this.cCam);
+            this.start();
+            this.isRunning = true;
+        } else {
+            CLogger.show(
+                `Cannot execute ${chalk.underline('prepareRenderAndRun')}: already running render`,
+                Logtype.ERROR
+            );
+        }
     }
 
     /** Start render */
     public start(): void {
-        let beginTime = Date.now();
-        this.loop(beginTime);
+        if(!this.isRunning) {
+            let beginTime = Date.now();
+            this.loop(beginTime);
+            this.isRunning = true;
+        } else {
+            CLogger.show(
+                `Cannot execute ${chalk.underline('prepareRenderAndRun')}: already running render`,
+                Logtype.ERROR
+            );
+        }
     }
 
     /** Run loop */
@@ -114,6 +140,10 @@ export default class CRenderEngine {
         let dt = 0;
 
         const tick = (): void => {
+            if(!this.isRunning) {
+                return;
+            }
+
             now = Date.now();
             dt = now - linkBeginTime;
             linkBeginTime = now;
