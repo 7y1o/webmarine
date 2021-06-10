@@ -6,7 +6,7 @@
     "build": "npm run build:tsToJs && npm run build:jsToBundle",
     "build:tsToJs": "tsc",
     "build:jsToBundle": "webpack",
-    "test": "karma start"
+    "test": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-typescript": "^7.13.0",
     "@types/cannon": "^0.1.5",
+    "@types/cypress": "^1.1.3",
     "@types/three": "^0.129.1",
     "@types/yuka": "^0.7.0",
     "babel-loader": "^8.2.2",
