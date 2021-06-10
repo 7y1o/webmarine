@@ -3,7 +3,7 @@
 
 # Exclude dirs
 !/src
-!/tests
+!/cypress
 
 # Exclude files
 !/.gitignore
