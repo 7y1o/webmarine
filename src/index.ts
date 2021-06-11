@@ -4,5 +4,5 @@
  */
 
 // Game engine utils
-export * from './render/references/IRenderConfig';
-export * from './render/CRenderEngine';
+export {default as IRenderConfig} from './render/references/IRenderConfig';
+export {default as CRenderEngine} from './render/CRenderEngine';
