@@ -1,16 +1,25 @@
-import {Camera, PerspectiveCamera, Scene, WebGLRenderer} from "three";
+import {
+    ArrayCamera,
+    Camera,
+    OrthographicCamera,
+    PerspectiveCamera,
+    Scene,
+    StereoCamera,
+    WebGLRenderer
+} from "three";
 import IRenderConfig from "./references/IRenderConfig";
 import IRenderEngineSwitch from "./references/IRenderEngineSwitch";
-import chalk from "chalk";
 import CLogger, {Logtype} from "../utils/CLogger";
+import {ClearPass} from "three/examples/jsm/postprocessing/ClearPass";
+import {CinematicCamera} from "three/examples/jsm/cameras/CinematicCamera";
 
 /**
  * @brief Class Render Engine
  * Initialize graphics render engine
  */
-export default class CRenderEngine {
+class CRenderEngine {
     private render: WebGLRenderer;
-    private cCam: Camera;
+    private cCam: PerspectiveCamera | ArrayCamera | StereoCamera | OrthographicCamera;
     private cScene: Scene;
     private readonly tickSteps: ((number) => void)[];
     private isRunning: boolean;
@@ -30,6 +39,7 @@ export default class CRenderEngine {
                 }
             )
         );
+        this.render.setSize(window.innerWidth, window.innerHeight);
 
 
         // Create base camera and scene
@@ -41,24 +51,37 @@ export default class CRenderEngine {
 
         // Add canvas to the page
         document.body.innerHTML = '';
+        document.body.style.cssText = `
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        `;
         playCanvas.style.cssText = `
-            position: fixed:
-            z-index: 100;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100vh;
             padding: 0;
             margin: 0;
         `;
-        document.body.append(playCanvas);
+        document.body.append(this.render.domElement);
 
         // Set default value for isRunning bool
         this.isRunning = false;
+
+        // Adjust size to window
+        window.addEventListener('resize', () => {
+            this.render.setSize(window.innerWidth, window.innerHeight);
+
+            if(this.cCam instanceof (PerspectiveCamera || ArrayCamera)) {
+                this.cCam.aspect = window.innerWidth / window.innerHeight
+                this.cCam.updateProjectionMatrix();
+            }
+        });
     }
 
     /** Switch current camera */
-    public switchCamera(newCam: Camera): void {
+    public switchCamera(newCam: PerspectiveCamera | ArrayCamera | StereoCamera | OrthographicCamera): void {
         this.cCam = newCam;
     }
 
@@ -81,7 +104,7 @@ export default class CRenderEngine {
 
         // Show warning if query data doesn't contains scene or camera
         if (!query.scene && !query.camera) {
-            CLogger.show(`used ${chalk.underline('switch')} with empty data in query`, Logtype.WARN);
+            CLogger.show(`used switch with empty data in query`, Logtype.WARN);
         }
     }
 
@@ -111,10 +134,9 @@ export default class CRenderEngine {
         if(!this.isRunning) {
             this.render.compile(this.cScene, this.cCam);
             this.start();
-            this.isRunning = true;
         } else {
             CLogger.show(
-                `Cannot execute ${chalk.underline('prepareRenderAndRun')}: already running render`,
+                `Cannot execute prepareRenderAndRun: already running render`,
                 Logtype.ERROR
             );
         }
@@ -124,11 +146,11 @@ export default class CRenderEngine {
     public start(): void {
         if(!this.isRunning) {
             let beginTime = Date.now();
-            this.loop(beginTime);
             this.isRunning = true;
+            this.loop(beginTime);
         } else {
             CLogger.show(
-                `Cannot execute ${chalk.underline('prepareRenderAndRun')}: already running render`,
+                `Cannot execute prepareRenderAndRun: already running render`,
                 Logtype.ERROR
             );
         }
@@ -155,5 +177,8 @@ export default class CRenderEngine {
             this.render.render(this.cScene, this.cCam);
             requestAnimationFrame(() => tick());
         }
+        tick();
     }
 }
+
+export default CRenderEngine;
