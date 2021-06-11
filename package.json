@@ -6,7 +6,9 @@
     "build": "npm run build:tsToJs && npm run build:jsToBundle",
     "build:tsToJs": "tsc",
     "build:jsToBundle": "webpack",
-    "test": "cypress open"
+    "test": "concurrently -n server,cypress -c magenta,cyan \"npm run test:server\" \"npm run test:cypress\"",
+    "test:server": "cd cypress/server && npm run dev",
+    "test:cypress": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -58,6 +60,7 @@
     "babel-loader": "^8.2.2",
     "babel-preset-7-esnext": "^0.0.2",
     "chalk": "^2.4.2",
+    "concurrently": "^6.2.0",
     "cypress": "^7.5.0",
     "karma-typescript": "^5.5.1",
     "terser-webpack-plugin": "^5.1.3",
