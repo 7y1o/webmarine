@@ -10,8 +10,6 @@ import {
 import IRenderConfig from "./references/IRenderConfig";
 import IRenderEngineSwitch from "./references/IRenderEngineSwitch";
 import CLogger, {Logtype} from "../utils/CLogger";
-import {ClearPass} from "three/examples/jsm/postprocessing/ClearPass";
-import {CinematicCamera} from "three/examples/jsm/cameras/CinematicCamera";
 
 /**
  * @brief Class Render Engine
@@ -171,7 +169,17 @@ class CRenderEngine {
             linkBeginTime = now;
 
             for (const cb of this.tickSteps) {
-                cb(dt);
+                try {
+                    cb(dt / 10000);
+                } catch (e) {
+                    console.error(e.message, e.stack);
+
+                    (() => {
+                        let start = Date.now(), expires = start + 500;
+                        while(Date.now() < expires) {}
+                        return;
+                    })();
+                }
             }
 
             this.render.render(this.cScene, this.cCam);
