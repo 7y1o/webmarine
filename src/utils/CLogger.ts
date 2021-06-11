@@ -1,29 +1,28 @@
-import chalk from "chalk";
-
 /** Logging util */
-export default class CLogger {
+class CLogger {
     public static show(message: string, type: Logtype) {
         switch (type) {
             case Logtype.INFO: {
-                console.log(`${head} ${chalk.blueBright('INFO')}: ${message}`);
+                console.log(`${head} INFO: ${message}`);
                 break;
             }
             case Logtype.SUCCESS: {
-                console.log(`${head} ${chalk.green('SUCCESS')}: ${message}`);
+                console.log(`${head} SUCCESS: ${message}`);
                 break;
             }
             case Logtype.WARN: {
-                console.log(`${head} ${chalk.yellow('WARN')}: ${message}`);
+                console.log(`${head} WARN: ${message}`);
                 break;
             }
             case Logtype.ERROR: {
-                console.log(`${head} ${chalk.red('ERROR')}: ${message}`);
+                console.log(`${head} ERROR: ${message}`);
                 break;
             }
         }
     }
 }
 
+/** Logger types for displaying context messages */
 export enum Logtype {
     INFO,
     SUCCESS,
@@ -31,4 +30,7 @@ export enum Logtype {
     ERROR
 }
 
-const head: string = chalk.blue('[WMC]');
+// Log heading part
+const head: string = '[WMC]';
+
+export default CLogger;
