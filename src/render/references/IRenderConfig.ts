@@ -1,5 +1,5 @@
 /** Render initialization config */
-export default interface IRenderConfig {
+interface IRenderConfig {
     /** Shader quality */
     precision?: 'highp' | 'mediump' | 'lowp';
 
@@ -20,9 +20,11 @@ export default interface IRenderConfig {
 
     /**
      * Whether to use a logarithmic depth buffer.
-     * It may be neccesary to use this if dealing with huge differences in scale in a single scene.
+     * It may be necessary to use this if dealing with huge differences in scale in a single scene.
      * Note that this setting uses gl_FragDepth if available which disables the Early Fragment Test
      * optimization and can cause a decrease in performance
      */
     logarithmicDepthBuffer?: boolean;
 }
+
+export default IRenderConfig;
