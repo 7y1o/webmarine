@@ -1,6 +1,6 @@
 {
   "name": "@7y1o/webmarine-core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Core utils for WebMarine game engine",
   "scripts": {
     "build": "npm run build:tsToJs && npm run build:jsToBundle",
