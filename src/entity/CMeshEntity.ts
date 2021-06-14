@@ -6,7 +6,7 @@ import {
     CylinderGeometry,
     Mesh,
     MeshBasicMaterial,
-    PlaneGeometry,
+    PlaneGeometry, PositionalAudio,
     SphereGeometry,
     TorusGeometry
 } from "three";
@@ -82,6 +82,11 @@ class CMeshEntity extends CBaseEntity {
                 return;
             }
         }
+    }
+
+    /** Apply sound to the instance */
+    public applySound(sound: PositionalAudio): void {
+        this.instance.add(sound);
     }
 }
 
