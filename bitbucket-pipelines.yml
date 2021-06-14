@@ -9,8 +9,8 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Deploy
+            name: Build library
             deployment: test
             script:
               - npm i
-              - npm run build
+              - "npm run build:tsToJs"
