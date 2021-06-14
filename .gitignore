@@ -14,3 +14,4 @@
 !/webpack.config.cjs
 !/babel.config.js
 !/cypress.json
+!/README.md
