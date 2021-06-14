@@ -1,6 +1,6 @@
 {
-  "name": "webmarine-core",
-  "version": "0.0.1",
+  "name": "@7y1o/webmarine-core",
+  "version": "0.0.3",
   "description": "Core utils for WebMarine game engine",
   "scripts": {
     "build": "npm run build:tsToJs && npm run build:jsToBundle",
@@ -10,6 +10,11 @@
     "test:server": "cd cypress/server && npm run dev",
     "test:cypress": "cypress open"
   },
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/magicians-game/webmarine-core.git"
@@ -72,5 +77,8 @@
     "cannon": "^0.6.2",
     "three": "^0.129.0",
     "yuka": "^0.7.6"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
