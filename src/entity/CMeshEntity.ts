@@ -1,7 +1,17 @@
 import CBaseEntity from "./CBaseEntity";
 import IBaseEntityConstructorParams from "./references/IBaseEntityConstructorParams";
-import {BoxGeometry, ConeGeometry, CylinderGeometry, Mesh, PlaneGeometry, SphereGeometry, TorusGeometry} from "three";
+import {
+    BoxGeometry,
+    ConeGeometry,
+    CylinderGeometry,
+    Mesh,
+    MeshBasicMaterial,
+    PlaneGeometry,
+    SphereGeometry,
+    TorusGeometry
+} from "three";
 import CLogger, {Logtype} from "../utils/CLogger";
+import IMeshEntityConstructorParams from "./references/IMeshEntityConstructorParams";
 
 /** Geometry type */
 type MeshType = Mesh | 'box' | 'cone' | 'cylinder' | 'plane' | 'sphere' | 'torus';
@@ -9,48 +19,61 @@ type MeshType = Mesh | 'box' | 'cone' | 'cylinder' | 'plane' | 'sphere' | 'torus
 /** Mesh entity class */
 class CMeshEntity extends CBaseEntity {
 
-    public constructor(mesh: MeshType, options: IBaseEntityConstructorParams) {
+    public constructor(mesh: MeshType, options: IMeshEntityConstructorParams) {
         super();
 
+        // Check if mesh is instance of Mesh class in THREE
         if(mesh instanceof Mesh) {
             this.instance = mesh;
             return;
         }
 
+        // Prepare material
+        const material = options.material || new MeshBasicMaterial({
+            color: 0xFFFFFF
+        });
+
+        // Check mesh type
         switch (mesh) {
             case "box": {
                 this.instance = new Mesh(
-                    new BoxGeometry()
+                    new BoxGeometry(),
+                    material
                 );
                 break;
             }
             case "cone": {
                 this.instance = new Mesh(
-                    new ConeGeometry()
+                    new ConeGeometry(),
+                    material
                 );
                 break;
             }
             case "cylinder": {
                 this.instance = new Mesh(
-                    new CylinderGeometry()
+                    new CylinderGeometry(),
+                    material
                 );
                 break;
             }
             case "plane": {
                 this.instance = new Mesh(
-                    new PlaneGeometry()
+                    new PlaneGeometry(),
+                    material
                 );
                 break;
             }
             case "sphere": {
                 this.instance = new Mesh(
-                    new SphereGeometry()
+                    new SphereGeometry(),
+                    material
                 );
                 break;
             }
             case "torus": {
                 this.instance = new Mesh(
-                    new TorusGeometry()
+                    new TorusGeometry(),
+                    material
                 );
                 break;
             }
