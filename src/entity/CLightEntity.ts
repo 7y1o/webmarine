@@ -2,18 +2,10 @@ import CBaseEntity from "./CBaseEntity";
 import IBaseEntityConstructorParams from "./references/IBaseEntityConstructorParams";
 import CLogger, {Logtype} from "../utils/CLogger";
 import {AmbientLight, Light, PointLight, RectAreaLight, SpotLight} from "three";
+import ILightEntityConstructorParams from "./references/ILightEntityConstructorParams";
 
 /** Type of light */
 type LightType = 'ambient' | 'point' | 'area' | 'spot';
-
-/** Light constructor params */
-interface ILightEntityConstructorParams extends IBaseEntityConstructorParams {
-    /** Light color */
-    lightColor: number;
-
-    /** Light intensity */
-    lightIntensity: number;
-}
 
 /** Light entity class */
 class CLightEntity extends CBaseEntity {
