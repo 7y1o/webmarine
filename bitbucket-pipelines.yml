@@ -9,15 +9,8 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm install
-              - npm test
-        - step:
-            name: Deploy to test
+            name: Deploy
             deployment: test
             script:
-              - echo "Deploying to test environment"
+              - npm i
               - npm run build
