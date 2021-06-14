@@ -3,6 +3,7 @@
 
 # Exclude dirs
 !/src
+!/lib
 !/cypress
 
 # Exclude files
