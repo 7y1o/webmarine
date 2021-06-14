@@ -10,3 +10,5 @@ export {default as CRenderEngine} from './render/CRenderEngine';
 
 // Entity
 export {default as CBaseEntity} from './entity/CBaseEntity';
+export {default as CMeshEntity} from './entity/CMeshEntity';
+export {default as CLightEntity} from './entity/CLightEntity';
