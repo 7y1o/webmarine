@@ -1,17 +1,4 @@
-import {Object3D, Vector3, WebGLRenderTarget} from "three";
-
-/** Base entity constructor params */
-interface IBaseEntityConstructorParams {
-
-    /** Rotation of the entity */
-    rotation?: Vector3;
-
-    /** Scale of the entity */
-    scale?: Vector3;
-
-    /** Position of the entity */
-    position?: Vector3;
-}
+import {BoxGeometry, BufferGeometry, Light, Material, Mesh, Object3D, Vector3} from "three";
 
 /** Each entity parent class */
 class CBaseEntity {
@@ -29,16 +16,7 @@ class CBaseEntity {
     private children: CBaseEntity[];
 
     /** Entity current instance */
-    public instance: WebGLRenderTarget;
-
-    /** Construct */
-    public constructor(options: IBaseEntityConstructorParams) {
-        this.prepare(options);
-    }
-
-    /** Constructor's additional function */
-    private prepare(options: IBaseEntityConstructorParams): void {
-    }
+    public instance: Mesh<BufferGeometry, Material | Material[]> | Light;
 
     /** Position change by x, y and z coords */
     public move(x: number, y: number, z: number): void {
