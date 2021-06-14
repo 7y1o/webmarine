@@ -1,11 +1,69 @@
 import CMeshEntity from "./CMeshEntity";
 import IEntityUtilsCreatingParams from "./references/IEntityUtilsCreatingParams";
-import {Mesh, MeshBasicMaterial, Vector3} from "three";
+import {Color, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, Texture, Vector2, Vector3} from "three";
 import CLightEntity from "./CLightEntity";
 import IEntityUtilsLightCreatingParams from "./references/IEntityUtilsLightCreatingParams";
 
 /** Basic material params */
-interface BasicMaterialParams {}
+interface BasicMaterialParams {
+
+    /** Texture which used for transparency */
+    alphaMap?: Texture;
+
+    /** Ambient occlusion texture */
+    aoMap?: Texture;
+
+    /** Intensity of the ambient occlusion map */
+    apMapIntensity?: number;
+
+    /** Material' color */
+    color?: Color;
+
+    /** How to combine the result of the surface's color with the environment map, if any */
+    combine?: number;
+
+    /** Environment map */
+    envMap?: Texture;
+
+    /** Albedo (color) map */
+    map?: Texture;
+
+    /** Determines how strongly the environment map is reflected on the object */
+    reflectivity?: number;
+
+    /** Render geometry as wireframe (only tris lines) */
+    wireframe?: boolean;
+}
+
+/** Physically based rendering material params */
+interface PBRMaterialParams {
+    /** Clear coat intensity */
+    clearcoat?: number;
+
+    /** Clear coat layer texture */
+    clearcoatMap?: Texture;
+
+    /** Normals of clear coat */
+    clearcoatNormalMap?: Texture;
+
+    /** Normal map scale of clear coat */
+    clearcoatNormalScale?: Vector2;
+
+    /** Refraction for non-metallic materials */
+    ior?: number;
+
+    /** Reflectivity */
+    reflectivity?: number;
+
+    /** The sheen color provides the ability to create two-tone specular materials */
+    sheen?: Color;
+
+    /** Optical transparency */
+    transmission?: number;
+
+    /** Transmission layer texture */
+    transmissionMap?: Texture;
+}
 
 /** Entity utils methods */
 class CEntityUtils {
@@ -100,7 +158,14 @@ class CEntityUtils {
     }
 
     /** Create basic material */
-    // public static createBasicMaterial(options?: BasicMaterialParams): MeshBasicMaterial {}
+    public static createBasicMaterial(options?: BasicMaterialParams): MeshBasicMaterial {
+        return new MeshBasicMaterial(options);
+    }
+
+    /** Create PBR material */
+    public static createPBRMaterial(options?: PBRMaterialParams): MeshPhysicalMaterial {
+        return new MeshPhysicalMaterial(options);
+    }
 }
 
 export default CEntityUtils;
