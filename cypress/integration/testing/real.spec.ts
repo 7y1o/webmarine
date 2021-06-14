@@ -9,4 +9,8 @@ describe('Test on real page', function () {
         cy.visit('http://localhost:7910/cube');
         cy.get('canvas');
     });
+    it('Mesh entity class', function () {
+        cy.visit('http://localhost:7910/mesh');
+        cy.get('canvas');
+    });
 });
