@@ -21,7 +21,7 @@ const ph = (per, mes, ...args) => {
 // Config data
 module.exports = {
     mode: 'development',
-    entry: './dist/index.js',
+    entry: './lib/index.js',
     output: {
         path: resolve(__dirname, 'build'),
         filename: 'webmarine.js',
