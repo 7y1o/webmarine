@@ -2,8 +2,11 @@
 
 # Dirs
 !src
+!cypress
 
 # Files
 !.gitignore
 !package.json
 !tsconfig.json
+!cypress.json
+!README.md
