@@ -1,13 +1,20 @@
 {
   "compilerOptions": {
-    "module": "ES6",
+    "module": "ESNext",
     "target": "ES6",
-    "sourceMap": true,
-    "outDir": "lib",
+    "lib": [
+      "DOM",
+      "ES6"
+    ],
+    "moduleResolution": "Classic",
     "declaration": true,
+    "outDir": "lib",
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": "."
   },
   "include": [
-    "./src/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"

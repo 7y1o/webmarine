@@ -1,17 +1,9 @@
-# Ignore all
 /*
 
-# Exclude dirs
-!/src
-!/lib
-!/cypress
+# Dirs
+!src
 
-# Exclude files
-!/.gitignore
-!/package.json
-!/package-lock.json
-!/tsconfig.json
-!/webpack.config.cjs
-!/babel.config.js
-!/cypress.json
-!/README.md
+# Files
+!.gitignore
+!package.json
+!tsconfig.json

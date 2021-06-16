@@ -1,18 +1,20 @@
-/**
- * WebMarine game engine core
- * @licence GPL-2.0
- * @description Core utils for WebMarine game engine
- * @author 7y1o
- */
+// Main entry
+export {WMGameEngine} from './WMGameEngine';
 
 // Render
-export {default as CRenderEngine} from './render/CRenderEngine';
+export {WMRenderEngine} from './render/WMRenderEngine';
 
-// Entity
-export {default as CBaseEntity} from './entity/CBaseEntity';
-export {default as CMeshEntity} from './entity/CMeshEntity';
-export {default as CLightEntity} from './entity/CLightEntity';
-export {default as CEntityUtils} from './entity/CEntityUtils';
+// Physics
+export {WMPhysicsEngine} from './physics/WMPhysicsEngine';
 
 // Audio
-export {default as CAudioEngine} from './audio/CAudioEngine';
+export {WMAudioEngine} from './audio/WMAudioEngine';
+
+// AI
+export {WMAIEngine} from './ai/WMAIEngine';
+
+// Entity
+// TODO
+
+// WebAssembly
+// TODO

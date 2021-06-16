@@ -1,20 +1,15 @@
 {
   "name": "@7y1o/webmarine-core",
-  "version": "0.0.4",
-  "description": "Core utils for WebMarine game engine",
-  "scripts": {
-    "build": "npm run build:tsToJs && npm run build:jsToBundle",
-    "build:tsToJs": "tsc",
-    "build:jsToBundle": "webpack",
-    "test": "concurrently -n server,cypress -c magenta,cyan \"npm run test:server\" \"npm run test:cypress\"",
-    "test:server": "cd cypress/server && npm run dev",
-    "test:cypress": "cypress open"
-  },
+  "version": "0.1.0",
+  "description": "Core for game engine WebMarine",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
-  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/magicians-game/webmarine-core.git"
@@ -23,62 +18,41 @@
     "web",
     "marine",
     "webmarine",
-    "utils",
-    "3d",
     "game",
-    "games",
     "engine",
-    "render",
-    "audio",
-    "sound",
-    "physics",
-    "entity",
-    "canvas",
-    "webgl",
-    "webgl2",
-    "webgl1",
-    "renderer",
+    "3d",
+    "2d",
     "ui",
     "interface",
     "play",
-    "web",
-    "nebula",
+    "render",
+    "physics",
+    "ai",
+    "audio",
+    "three",
+    "yuka",
     "three",
     "cannon",
-    "postprocess",
-    "yuka"
+    "js",
+    "ts",
+    "javascript",
+    "typescript",
+    "types"
   ],
   "author": "7y1o",
-  "license": "GPL-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://bitbucket.org/magicians-game/webmarine-core/issues"
   },
   "homepage": "https://bitbucket.org/magicians-game/webmarine-core#readme",
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
-    "@babel/preset-typescript": "^7.13.0",
-    "@types/cannon": "^0.1.5",
-    "@types/cypress": "^1.1.3",
-    "@types/three": "^0.129.1",
-    "@types/yuka": "^0.7.0",
-    "babel-loader": "^8.2.2",
-    "babel-preset-7-esnext": "^0.0.2",
-    "chalk": "^2.4.2",
-    "concurrently": "^6.2.0",
-    "cypress": "^7.5.0",
-    "karma-typescript": "^5.5.1",
-    "terser-webpack-plugin": "^5.1.3",
-    "typescript": "^4.3.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.2"
-  },
   "dependencies": {
     "cannon": "^0.6.2",
     "three": "^0.129.0",
     "yuka": "^0.7.6"
   },
-  "directories": {
-    "lib": "lib"
+  "devDependencies": {
+    "@types/cannon": "^0.1.5",
+    "@types/three": "^0.129.1",
+    "@types/yuka": "^0.7.0"
   }
 }

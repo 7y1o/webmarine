@@ -1,9 +1,0 @@
-/*
-
-# Exclude files
-!.gitignore
-!index.html
-!main.js
-!package.json
-!package-lock.json
-!vite.config.js
