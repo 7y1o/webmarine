@@ -2,10 +2,8 @@ import {
     ArrayCamera,
     Camera,
     Clock,
-    OrthographicCamera,
     PerspectiveCamera,
     Scene,
-    StereoCamera,
     WebGLRenderer
 } from "three";
 import {WMRenderEngineConfigRef} from "./refs/WMRenderEngineConfigRef";
@@ -17,10 +15,13 @@ export class WMRenderEngine {
     private workScene: Scene;
     private workCam: Camera;
     private readonly steps: ((number) => void)[];
+    private readonly init: (() => void)[];
+    private readonly compileSteps: (() => void)[];
     private isRun: boolean;
     private fpsLimit: number | 'auto';
     private renderRes: {w: number, h: number};
-    private canvasInstance: HTMLCanvasElement;
+    private errorStack: string[];
+    private readonly canvasInstance: HTMLCanvasElement;
 
     /** Create render engine */
     public constructor(config?: WMRenderEngineConfigRef) {
@@ -32,7 +33,7 @@ export class WMRenderEngine {
             canvas: this.canvasInstance,
             logarithmicDepthBuffer: false
         });
-        WMRenderEngine.setupDocument(this.canvasInstance);
+        WMRenderEngine.setupDocument(this.canvasInstance).then();
         this.renderRes = {
             w: window.innerWidth,
             h: window.innerHeight
@@ -41,6 +42,8 @@ export class WMRenderEngine {
         this.workCam = new PerspectiveCamera(45, this.renderRes.w / this.renderRes.h, .1, 1000);
         this.workScene = new Scene();
         this.steps = [];
+        this.init = [];
+        this.compileSteps = [];
         this.isRun = false;
         this.fpsLimit = 'auto';
         window.addEventListener('resize', () => {
@@ -120,13 +123,32 @@ export class WMRenderEngine {
         return this.isRun;
     }
 
+    /** Add new init step */
+    public addInit(fn: () => void): void {
+        this.init.push(fn);
+    }
+
     /** Add new update tick step */
     public addUpdate(fn: (number) => void): void {
         this.steps.push(fn);
     }
 
+    /** Add new compile step */
+    public addCompileStep(fn: () => void): void {
+        this.compileSteps.push(fn);
+    }
+
     /** Render compile */
     public async compile(): Promise<void> {
+        for (const fn of this.compileSteps) {
+            try {
+                fn();
+            } catch (e) {
+                console.error(`[WMC error]: Error in compile step function: ${e.message}`);
+                console.error(e.stack);
+            }
+        }
+
         this.engine.compile(this.workScene, this.workCam);
     }
 
@@ -135,7 +157,7 @@ export class WMRenderEngine {
         if (this.isRun) return;
         await this.compile();
         await this.start();
-        console.info('Render successfully started');
+        console.info('[WMC info]: Render successfully started');
     }
 
     /** Reload render engine */
@@ -156,8 +178,31 @@ export class WMRenderEngine {
         this.isRun = true;
         const clock = new Clock();
 
+        // Check errors in error stack
+        const checkErrorStack = async (): Promise<void> => {
+            if (this.isRun) requestAnimationFrame(() => checkErrorStack);
+            if (this.errorStack.length > 0) {
+                for (const error in this.errorStack) {
+                    console.error(error);
+                }
+            }
+
+            const expire = Date.now() + 5000;
+            while (Date.now() < expire) {}
+        }
+
         // Check is elapsed time larger than one frame time limit
         const isOutOfLimit = (elapsed: number): boolean => this.fpsLimit !== 'auto' && elapsed > (1 / this.fpsLimit);
+
+        // Run init steps
+        for (const fn of this.init) {
+            try {
+                fn();
+            } catch (e) {
+                console.error(`[WMC error]: Cannot execute init function: ${e.message}`);
+                console.error(e.stack);
+            }
+        }
 
         // Render tick
         const tick = (): void => {
@@ -170,8 +215,14 @@ export class WMRenderEngine {
                 if (isOutOfLimit(clock.elapsedTime)) break;
 
                 // Try to execute function
-                try { stepFn(dt) }
-                catch(e) {}
+                try {
+                    stepFn(dt);
+                } catch(e) {
+                    if (!(`[WMC error]: Cannot execute render tick step function: ${e.message}` in this.errorStack)) {
+                        this.errorStack.push(`[WMC error]: Cannot execute render tick step function: ${e.message}`);
+                        this.errorStack.push(e.stack);
+                    }
+                }
             }
 
             // Render the frame
