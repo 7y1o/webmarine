@@ -14,7 +14,8 @@ export {WMAudioEngine} from './audio/WMAudioEngine';
 export {WMAIEngine} from './ai/WMAIEngine';
 
 // Entity
-// TODO
+export {WMEntityUtils} from './entity/WMEntityUtils';
+export {WMMeshEntity} from './entity/WMMeshEntity';
 
 // WebAssembly
 // TODO
