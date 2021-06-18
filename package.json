@@ -8,7 +8,8 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -52,8 +53,10 @@
   },
   "devDependencies": {
     "@types/cannon": "^0.1.5",
+    "@types/cypress": "^1.1.3",
     "@types/three": "^0.129.1",
     "@types/yuka": "^0.7.0",
-    "cypress": "^7.5.0"
+    "cypress": "^7.5.0",
+    "typescript": "^4.3.2"
   }
 }
