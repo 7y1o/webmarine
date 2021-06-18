@@ -161,7 +161,7 @@ export class WMRenderEngine {
     }
 
     /** Reload render engine */
-    public reloadEngine(config?: WMRenderEngineConfigRef): void {
+    public async reloadEngine(config?: WMRenderEngineConfigRef): Promise<void> {
         if (this.isRun) this.isRun = false;
         this.engine = new WebGLRenderer(config ?? {
             antialias: true,
