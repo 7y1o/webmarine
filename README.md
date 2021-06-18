@@ -53,15 +53,15 @@ import {WMRenderEngine, WMEntityUtils} from "@7y1o/webmarine-core";
 
 // Do actions from previous example with init, camera and render start
 const engine = new WMRenderEngine();
-engine.camera.position.set(5, 5, 5);
-engine.camera.lookAt(0, 0, 0);
+engine.currentCamera.position.set(5, 5, 5);
+engine.currentCamera.lookAt(0, 0, 0);
 engine.prepareAndStart();
 
 // Loading glTF model and place it on the scene
 let model = null; 
 WMEntityUtils.mesh.gltf('sample-model.gltf').then(entity => {
     model = entity;
-    engine.scene.add(model); 
+    engine.currentScene.add(model); 
 });
 ```
 ___
@@ -71,16 +71,17 @@ import {WMRenderEngine, WMEntityUtils} from '@7y1o/webmarine-core';
 
 // Do action from previous example again
 const engine = new WMRenderEngine();
-engine.camera.position.set(5, 5, 5);
-engine.camera.lookAt(0, 0, 0);
+engine.currentCamera.position.set(5, 5, 5);
+engine.currentCamera.lookAt(0, 0, 0);
 engine.prepareAndStart();
 
 // Creating mesh and PBR material for it with default parameters
 const mesh = WMEntityUtils.mesh.sphere();
 mesh.material = WMEntityUtils.material.pbr();
-engine.scene.add(mesh);
+engine.currentScene.add(mesh);
 
 // Adding light
 const light = WMEntityUtils.light.directional();
-engine.scene.add(light);
+light.position.add(0, 5, 0);
+engine.currentScene.add(light);
 ```
