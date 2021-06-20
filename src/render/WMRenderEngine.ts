@@ -1,5 +1,4 @@
 import {
-    ArrayCamera,
     Camera,
     Clock,
     PerspectiveCamera,
@@ -7,7 +6,6 @@ import {
     WebGLRenderer
 } from "three";
 import {WMRenderEngineConfigRef} from "./refs/WMRenderEngineConfigRef";
-import {CinematicCamera} from "three/examples/jsm/cameras/CinematicCamera";
 import {EffectComposer, Pass} from "three/examples/jsm/postprocessing/EffectComposer";
 
 /** WebMarine render engine */
@@ -19,6 +17,7 @@ export class WMRenderEngine {
     private readonly init: (() => void)[];
     private readonly compileSteps: (() => void)[];
     private isRun: boolean;
+    private oolEnabled: boolean;
     private fpsLimit: number | 'auto';
     private renderRes: {w: number, h: number};
     private errorStack: string[];
@@ -47,6 +46,7 @@ export class WMRenderEngine {
         this.init = [];
         this.compileSteps = [];
         this.isRun = false;
+        this.oolEnabled = false;
         this.fpsLimit = 'auto';
         this.postComposer = new EffectComposer(this.engine);
         this.postComposer.setSize(this.renderRes.w, this.renderRes.h);
@@ -76,6 +76,11 @@ export class WMRenderEngine {
             max-height: 100vh
         `;
         document.body.append(canvas);
+    }
+
+    /** Turn OOL (Out of limit breaking) function */
+    public set ool(value: boolean) {
+        this.oolEnabled = value;
     }
 
     /** Update render resolution */
@@ -225,7 +230,7 @@ export class WMRenderEngine {
             // Iterate all update steps
             for (const stepFn of this.steps) {
                 // Check is frame elapsed time larger than limit
-                if (isOutOfLimit(clock.elapsedTime)) break;
+                if (this.oolEnabled && isOutOfLimit(clock.elapsedTime)) break;
 
                 // Try to execute function
                 try {
