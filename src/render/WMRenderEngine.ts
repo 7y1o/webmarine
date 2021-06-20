@@ -8,6 +8,7 @@ import {
 } from "three";
 import {WMRenderEngineConfigRef} from "./refs/WMRenderEngineConfigRef";
 import {CinematicCamera} from "three/examples/jsm/cameras/CinematicCamera";
+import {EffectComposer, Pass} from "three/examples/jsm/postprocessing/EffectComposer";
 
 /** WebMarine render engine */
 export class WMRenderEngine {
@@ -22,6 +23,7 @@ export class WMRenderEngine {
     private renderRes: {w: number, h: number};
     private errorStack: string[];
     private readonly canvasInstance: HTMLCanvasElement;
+    private readonly postComposer: EffectComposer;
 
     /** Create render engine */
     public constructor(config?: WMRenderEngineConfigRef) {
@@ -46,6 +48,8 @@ export class WMRenderEngine {
         this.compileSteps = [];
         this.isRun = false;
         this.fpsLimit = 'auto';
+        this.postComposer = new EffectComposer(this.engine);
+        this.postComposer.setSize(this.renderRes.w, this.renderRes.h);
         window.addEventListener('resize', () => {
             if (this.workCam instanceof (PerspectiveCamera || ArrayCamera || CinematicCamera)) {
                 this.workCam.aspect = this.renderRes.w / this.renderRes.h;
@@ -81,11 +85,15 @@ export class WMRenderEngine {
             h: data.h ?? this.renderRes.h
         };
 
+        // Check if current camera is perspective camera
         if (this.workCam instanceof (PerspectiveCamera || ArrayCamera || CinematicCamera)) {
             this.workCam.aspect = this.renderRes.w / this.renderRes.h;
             this.workCam.updateProjectionMatrix();
         }
+
+        // Set size for render engine and postprocess composer
         this.engine.setSize(this.renderRes.w, this.renderRes.h);
+        this.postComposer.setSize(this.renderRes.w, this.renderRes.h);
     }
 
     /** Set FPS limit */
@@ -172,6 +180,11 @@ export class WMRenderEngine {
         });
     }
 
+    /** Add postprocessing step */
+    public addPostPass(pass: Pass): void {
+        this.postComposer.addPass(pass);
+    }
+
     /** Start render */
     public async start(): Promise<void> {
         if (this.isRun) return;
@@ -227,6 +240,11 @@ export class WMRenderEngine {
 
             // Render the frame
             this.engine.render(this.workScene, this.workCam);
+
+            // If effect composer have passes, render
+            if (this.postComposer.passes.length > 0) {
+                this.engine.render(this.workScene, this.workCam);
+            }
         };
         tick();
     }
