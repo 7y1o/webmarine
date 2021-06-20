@@ -51,7 +51,7 @@ export class WMRenderEngine {
         this.postComposer = new EffectComposer(this.engine);
         this.postComposer.setSize(this.renderRes.w, this.renderRes.h);
         window.addEventListener('resize', () => {
-            if (this.workCam instanceof (PerspectiveCamera || ArrayCamera || CinematicCamera)) {
+            if (this.workCam instanceof PerspectiveCamera) {
                 this.workCam.aspect = this.renderRes.w / this.renderRes.h;
                 this.workCam.updateProjectionMatrix();
             }
@@ -86,7 +86,7 @@ export class WMRenderEngine {
         };
 
         // Check if current camera is perspective camera
-        if (this.workCam instanceof (PerspectiveCamera || ArrayCamera || CinematicCamera)) {
+        if (this.workCam instanceof PerspectiveCamera) {
             this.workCam.aspect = this.renderRes.w / this.renderRes.h;
             this.workCam.updateProjectionMatrix();
         }
