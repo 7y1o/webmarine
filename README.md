@@ -88,12 +88,12 @@ engine.currentScene.add(light);
 ___
 ## Version list
 
-- 0.1.3:
+- 0.1.4:
     + Added OOT function (out of time breaking)
     + Optimized instance checking for PerspectiveCamera
     + Fixed bug with missing TypeScript files (I just forgot to add them to the package)
     + Added postprocessing passes support
     
-- 0.1.2:
+- 0.1.3:
     + Guys, I don't remember what was there. Okay, let it be that the history of 
       WebMarine began with her...
