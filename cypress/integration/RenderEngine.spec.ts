@@ -9,6 +9,9 @@ describe('WMRenderEngine class', () => {
         it('Can initialize', () => {
             expect(engine).instanceof(WMRenderEngine);
         });
+        it('Have OOL setter', () => {
+            expect('ool' in engine).to.be.true;
+        });
         it('Have resolution setter', () => {
             expect('resolution' in engine).to.be.true;
         });
@@ -50,6 +53,9 @@ describe('WMRenderEngine class', () => {
         });
         it('Have reloadEngine method', () => {
             expect('reloadEngine' in engine).to.be.true;
+        });
+        it('Have addPostPass method', () => {
+            expect('addPostPass' in engine).to.be.true;
         });
         it('Have start method', () => {
             expect('start' in engine).to.be.true;
